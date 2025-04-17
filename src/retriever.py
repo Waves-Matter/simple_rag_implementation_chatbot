@@ -13,7 +13,7 @@ def get_retriever(file_path, embed_model_name):
     embeddings = HuggingFaceEmbeddings(model_name=embed_model_name)
 
     vectorstore = Chroma.from_documents(documents=docs, 
-                                        embedding=embeddings) #we vectorise the document
+                                        embedding=embeddings)
 
     retriever = vectorstore.as_retriever()
     return retriever
