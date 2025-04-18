@@ -1,8 +1,9 @@
 langchain-community==0.3.20
 langchain-huggingface==0.1.2
 chromadb
-protobuf==3.20.1
 bitsandbytes
 accelerate
 hf_xet
 git+https://github.com/shumingma/transformers.git
+chainlit
+protobuf==3.20.1
