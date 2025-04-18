@@ -5,3 +5,4 @@ protobuf==3.20.1
 bitsandbytes
 accelerate
 hf_xet
+git+https://github.com/shumingma/transformers.git
