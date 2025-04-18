@@ -94,7 +94,7 @@ def get_final_prompt(prompt, retriever, tokenizer, history = None, specify_quest
         Respond only to the question asked, response should be concise and relevant to the question.
         Provide url of the source document when relevant.
         Take the chat history into account when creating the response.
-        Execute case specific instructions.
+        Execute case specific instructions if they are present.
         If the answer cannot be deduced from the context, do not give an answer and ask for another question.""",
     },
     {
