@@ -1,14 +1,21 @@
 import json
 
+#Function needed to determine if user prompt suggests an issue related with connectivity.
 def is_connectivity_issue(prompt):
     keywords = ['disconnect', 'can\'t connect', 'connection lost', 'network issue', 'connectivity', 'connect', 'connection']
+    #The assumption is made that users will use cartain dictionary to decribe the problem
+    #If these keywords are used, there is a high chance that user has a connectivity issue.
+    #The keywords might be altered.
+    
     return any((keyword in prompt.lower() for keyword in keywords))
 
-def is_device(prompt):
+def is_device(prompt):#Function checks if the user specified their device in the initial prompt to avoid the chatbot asking for the information the user already provided. 
     keywords = ['phone', 'android', 'iphone', 'computer', 'laptop', 'kindle', 'nintendo', 'switch', 'playstation', 'xbox', 'rasberry', 'chromebook', 'tv']
+    #In this function only the most popular itemsare listed thus it does not cover all of the possible cases. 
+    
     return any((keyword in prompt.lower() for keyword in keywords))
 
-def has_country(prompt):
+def has_country(prompt):#Function checks if the user specified their location in the initial prompt to avoid the chatbot asking for the information the user already provided. 
     countries = [
     "Afghanistan", "Albania", "Algeria", "Andorra", "Angola", 
     "Antigua and Barbuda", "Argentina", "Armenia", "Australia", 
@@ -59,13 +66,17 @@ def has_country(prompt):
     "Uzbekistan", "Vanuatu", "Vatican", "Venezuela", 
     "Vietnam", "Yemen", "Zambia", "Zimbabwe"
     ]
+    #This function only checks for the country, thus if the user provides a city it will not work.
+
     return any((keyword.lower() in prompt.lower() for keyword in countries))
 
-def is_OS(prompt):
+def is_OS(prompt):#Function checks if the user specified their OS in the initial prompt to avoid the chatbot asking for the information the user already provided. 
     keywords = [' Microsoft', 'Windows', 'Mac', 'Android', 'Linux', 'Ubuntu', 'Fedora']
+    #In this function only the most popular OS are listed thus it does not cover all of the possible cases. 
+    
     return any((keyword in prompt.lower() for keyword in keywords))
 
-def get_body_content(document):
+def get_body_content(document): #Function is meant extract the content of the document from the retriever and return it in string form.
   
     string_text = document.page_content
     dat = json.loads(string_text)
@@ -75,7 +86,7 @@ def get_body_content(document):
     
     return body_content, body_title, body_url
 
-def get_context(prompt, retriever):
+def get_context(prompt, retriever): #Function is meant to format the document content.
     context_docs = retriever.get_relevant_documents(prompt)
     
     context = "\nExtracted documents:\n"
@@ -86,7 +97,11 @@ def get_context(prompt, retriever):
     
     return context
 
-def get_final_prompt(prompt, retriever, tokenizer, history = None, specify_question = None):
+def get_final_prompt(prompt, retriever, tokenizer, history = None, specify_question = None): #Function returns the final prompt which is given to the model.
+    #prompt - original user input.
+    #history - history of the previous conversation.
+    #specify_question - case specific instruction that is given to the model //not used in this project.
+    
     prompt_in_chat_format = [
     {
         "role": "system",

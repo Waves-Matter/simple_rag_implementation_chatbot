@@ -2,12 +2,8 @@ import torch._dynamo
 from transformers import pipeline
 from transformers import AutoTokenizer, AutoModelForCausalLM, BitsAndBytesConfig
 
-from langchain_huggingface import HuggingFaceEmbeddings
-from langchain_community.document_loaders import JSONLoader
-from langchain_community.vectorstores import Chroma
 
-
-def load_reader_tokenizer_model(model_path, api_token):
+def load_reader_tokenizer_model(model_path, api_token): #Function that loads the reader and tokenizer models. 
     torch._dynamo.config.suppress_errors = True
 
     bnb_config = BitsAndBytesConfig(
@@ -32,12 +28,12 @@ def load_reader_tokenizer_model(model_path, api_token):
     
     return READER_LLM, my_tokenizer
 
-def get_tokenizer(model_path):
+def get_tokenizer(model_path): #Function that loads the tokenizer.
     torch._dynamo.config.suppress_errors = True
     my_tokenizer = AutoTokenizer.from_pretrained(model_path)
     return my_tokenizer
 
-def get_llm(model_path, api_token):
+def get_llm(model_path, api_token): #Function that loads the reader model. 
     torch._dynamo.config.suppress_errors = True
 
     bnb_config = BitsAndBytesConfig(
@@ -50,18 +46,3 @@ def get_llm(model_path, api_token):
     llm = AutoModelForCausalLM .from_pretrained(model_path, quantization_config=bnb_config, token = api_token)
     
     return llm
-
-
-def get_retriever(file_path, embed_model_name):
-
-    loader = JSONLoader(file_path=file_path, jq_schema='.[]', text_content=False) #Load the JSON file
-
-    docs = loader.load() #We do not split this, as the doc variable is already a list, loaded from JSON
-
-    embeddings = HuggingFaceEmbeddings(model_name=embed_model_name)
-
-    vectorstore = Chroma.from_documents(documents=docs, 
-                                        embedding=embeddings)
-
-    retriever = vectorstore.as_retriever()
-    return retriever
