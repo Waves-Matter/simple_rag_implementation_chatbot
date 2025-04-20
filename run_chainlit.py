@@ -31,6 +31,4 @@ async def main(message: cl.Message):
     
     answer = get_final_answer(user_answer, chat_history, my_retriever, my_tokenizer, my_reader_llm)    
     
-    a = return_history(chat_history)
-    #await cl.Message(content=answer).send()
-    await cl.Message(content=a).send()
+    await cl.Message(content=answer).send()

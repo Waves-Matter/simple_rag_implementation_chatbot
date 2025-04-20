@@ -2,7 +2,7 @@ import json
 
 #Function needed to determine if user prompt suggests an issue related with connectivity.
 def is_connectivity_issue(prompt):
-    keywords = ['disconnect', 'can\'t connect', 'connection lost', 'network issue', 'connectivity', 'connect', 'connection']
+    keywords = ['disconnect', 'can\'t connect', 'connection lost', 'network issue', 'connectivity', 'connect', 'connection', 'disconnected']
     #The assumption is made that users will use cartain dictionary to decribe the problem
     #If these keywords are used, there is a high chance that user has a connectivity issue.
     #The keywords might be altered.
@@ -71,7 +71,7 @@ def has_country(prompt):#Function checks if the user specified their location in
     return any((keyword.lower() in prompt.lower() for keyword in countries))
 
 def is_OS(prompt):#Function checks if the user specified their OS in the initial prompt to avoid the chatbot asking for the information the user already provided. 
-    keywords = [' Microsoft', 'Windows', 'Mac', 'Android', 'Linux', 'Ubuntu', 'Fedora']
+    keywords = [' microsoft', 'windows', 'mac', 'android', 'linux', 'ubuntu', 'fedora', 'iphone']
     #In this function only the most popular OS are listed thus it does not cover all of the possible cases. 
     
     return any((keyword in prompt.lower() for keyword in keywords))
@@ -105,19 +105,18 @@ def get_final_prompt(prompt, retriever, tokenizer, history = None, specify_quest
     prompt_in_chat_format = [
     {
         "role": "system",
-        "content": """Using the information contained in the context, give a comprehensive answer to the question.
-        Respond only to the question asked, response should be concise and relevant to the question.
-        Provide url of the source document when relevant.
-        Take the chat history into account when creating the response.
-        Execute case specific instructions if they are present.
-        If the answer cannot be deduced from the context, do not give an answer and ask for another question.""",
+        "content": """You are a customer support agent. Using the information contained in the context, give a comprehensive answer to the question. 
+        Respond only to the question asked, response should be concise and relevant to the question. 
+        User can't see the context documents therefore provide full rephrased context of the relevant documents in Your answer if needed. 
+        Take the chat history into account when creating the response. Execute case specific instructions if they are present. 
+        If the answer is not related to the context or cannot be deduced from the context, do not give an answer and ask for another question.""",
     },
     {
         "role": "user",
         "content": """Context: 
         {context}
          ---
-        You need to provide answer to this user prompt:
+        You need to provide an answer to this user prompt:
         {question}""",
     },
 ]
