@@ -79,9 +79,9 @@ Further explanation is provided in the comments of the code itself. :)
 - Sometimes would advice the user to contact company's customer support, even though it itself is the customer support.
 
 ## Credentials
-Ugnė Šilingaitė
-[https://www.linkedin.com/in/ugnė-šilingaitė0616](https://www.linkedin.com/in/ugn%C4%97-%C5%A1ilingait%C4%970616/)
-ugnsili@gmail.com
+Ugnė Šilingaitė <br />
+[https://www.linkedin.com/in/ugnė-šilingaitė0616](https://www.linkedin.com/in/ugn%C4%97-%C5%A1ilingait%C4%970616/) <br />
+ugnsili@gmail.com <br />
 
 
 
