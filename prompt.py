@@ -1,115 +1,20 @@
-import json
+from context import get_simple_context, get_Multi_Query_context
 
-#Function needed to determine if user prompt suggests an issue related with connectivity.
-def is_connectivity_issue(prompt):
-    keywords = ['disconnect', 'can\'t connect', 'connection lost', 'network issue', 'connectivity', 'connect', 'connection', 'disconnected']
-    #The assumption is made that users will use cartain dictionary to decribe the problem
-    #If these keywords are used, there is a high chance that user has a connectivity issue.
-    #The keywords might be altered.
+def get_final_prompt(prompt, retriever, tokenizer, llm = None, history = None, specify_question = None): # Function returns the final prompt which is given to the model.
+    # prompt - original user input.
+    # history - history of the previous conversation.
+    # specify_question - case specific instruction that is given to the model //not used in this project.
     
-    return any((keyword in prompt.lower() for keyword in keywords))
-
-def is_device(prompt):#Function checks if the user specified their device in the initial prompt to avoid the chatbot asking for the information the user already provided. 
-    keywords = ['phone', 'android', 'iphone', 'computer', 'laptop', 'kindle', 'nintendo', 'switch', 'playstation', 'xbox', 'rasberry', 'chromebook', 'tv']
-    #In this function only the most popular itemsare listed thus it does not cover all of the possible cases. 
+    prompt_in_chat_format = [ # Prompt is constructed in a way to give model instructions on how to construct the answer. 
+    # In this case the model is instructed to answer the question based on the context.
     
-    return any((keyword in prompt.lower() for keyword in keywords))
-
-def has_country(prompt):#Function checks if the user specified their location in the initial prompt to avoid the chatbot asking for the information the user already provided. 
-    countries = [
-    "Afghanistan", "Albania", "Algeria", "Andorra", "Angola", 
-    "Antigua and Barbuda", "Argentina", "Armenia", "Australia", 
-    "Austria", "Azerbaijan", "The Bahamas", "Bahrain", "Bangladesh", 
-    "Barbados", "Belarus", "Belgium", "Belize", "Benin", 
-    "Bhutan", "Bolivia", "Bosnia and Herzegovina", "Botswana", 
-    "Brazil", "Brunei", "Bulgaria", "Burkina Faso", "Burundi", 
-    "Cabo Verde", "Cambodia", "Cameroon", "Canada", 
-    "Central African Republic", "Chad", "Chile", "China", 
-    "Colombia", "Comoros", "Congo, Democratic Republic of the", 
-    "Congo, Republic of the", "Costa Rica", 
-    "Croatia", "Cuba", "Cyprus", "Czech", "Denmark", 
-    "Djibouti", "Dominica", "Dominican Republic", 
-    "Timor", "Ecuador", "Egypt", 
-    "Salvador", "Eritrea", "Estonia", 
-    "Eswatini", "Ethiopia", "Fiji", "Finland", "France", 
-    "Gabon", "The Gambia", "Georgia", "Germany", "Ghana", 
-    "Greece", "Grenada", "Guatemala", "Guinea", 
-    "Guyana", "Haiti", "Honduras", "Hungary", "Iceland", 
-    "India", "Indonesia", "Iran", "Iraq", "Ireland", 
-    "Israel", "Italy", "Jamaica", "Japan", "Jordan", 
-    "Kazakhstan", "Kenya", "Kiribati", "Korea, North", 
-    "Korea, South", "Kosovo", "Kuwait", "Kyrgyzstan", 
-    "Laos", "Latvia", "Lebanon", "Lesotho", "Liberia", 
-    "Libya", "Liechtenstein", "Lithuania", "Luxembourg", 
-    "Madagascar", "Malawi", "Malaysia", "Maldives", "Mali", 
-    "Malta", "Marshall", "Mauritania", "Mauritius", 
-    "Mexico", "Micronesia, Federated States of", "Moldova", 
-    "Monaco", "Mongolia", "Montenegro", "Morocco", 
-    "Mozambique", "Myanmar", "Burma", "Namibia", "Nauru", 
-    "Nepal", "Netherlands", "New Zealand", "Nicaragua", 
-    "Niger", "Nigeria", "North Macedonia", "Norway", "Oman", 
-    "Pakistan", "Palau", "Panama", "Papua New Guinea", 
-    "Paraguay", "Peru", "Philippines", "Poland", "Portugal", 
-    "Qatar", "Romania", "Russia", "Rwanda", 
-    "Saint Kitts and Nevis", "Saint Lucia", 
-    "Saint Vincent and the Grenadines", "Samoa", "San Marino", 
-    "Sao Tome and Principe", "Saudi Arabia", "Senegal", 
-    "Serbia", "Seychelles", "Sierra Leone", "Singapore", 
-    "Slovakia", "Slovenia", "Solomon Islands", "Somalia", 
-    "South Africa", "Spain", "Sri Lanka", "Sudan", 
-    "Sudan, South", "Suriname", "Sweden", "Switzerland", 
-    "Syria", "Taiwan", "Tajikistan", "Tanzania", 
-    "Thailand", "Togo", "Tonga", "Trinidad and Tobago", 
-    "Tunisia", "Turkey", "Turkmenistan", "Tuvalu", 
-    "Uganda", "Ukraine", "United Arab Emirates", 
-    "United Kingdom", "United States", "Uruguay", "England",
-    "Uzbekistan", "Vanuatu", "Vatican", "Venezuela", 
-    "Vietnam", "Yemen", "Zambia", "Zimbabwe"
-    ]
-    #This function only checks for the country, thus if the user provides a city it will not work.
-
-    return any((keyword.lower() in prompt.lower() for keyword in countries))
-
-def is_OS(prompt):#Function checks if the user specified their OS in the initial prompt to avoid the chatbot asking for the information the user already provided. 
-    keywords = [' microsoft', 'windows', 'mac', 'android', 'linux', 'ubuntu', 'fedora', 'iphone']
-    #In this function only the most popular OS are listed thus it does not cover all of the possible cases. 
-    
-    return any((keyword in prompt.lower() for keyword in keywords))
-
-def get_body_content(document): #Function is meant extract the content of the document from the retriever and return it in string form.
-  
-    string_text = document.page_content
-    dat = json.loads(string_text)
-    body_content = dat.get('body')
-    body_title = dat.get('title')
-    body_url = dat.get('url')
-    
-    return body_content, body_title, body_url
-
-def get_context(prompt, retriever): #Function is meant to format the document content.
-    context_docs = retriever.get_relevant_documents(prompt)
-    
-    context = "\nExtracted documents:\n"
-    context = "\n".join([
-    f"Document {i + 1}:\nTitle: {get_body_content(doc)[0]}\n{get_body_content(doc)[1]}\nUrl: {get_body_content(doc)[2]}"
-    for i, doc in enumerate(context_docs)
-    ])
-    
-    return context
-
-def get_final_prompt(prompt, retriever, tokenizer, history = None, specify_question = None): #Function returns the final prompt which is given to the model.
-    #prompt - original user input.
-    #history - history of the previous conversation.
-    #specify_question - case specific instruction that is given to the model //not used in this project.
-    
-    prompt_in_chat_format = [
     {
         "role": "system",
         "content": """You are a customer support agent. Using the information contained in the context, give a comprehensive answer to the question. 
-        Respond only to the question asked, response should be concise and relevant to the question. 
-        User can't see the context documents therefore provide full rephrased context of the relevant documents in Your answer if needed. 
-        Take the chat history into account when creating the response. Execute case specific instructions if they are present. 
-        If the answer is not related to the context or cannot be deduced from the context, do not give an answer and ask for another question.""",
+Respond only to the question asked, response should be concise and relevant to the question. 
+Provide full rephrased context of the relevant documents in Your answer if needed. 
+Take the chat history into account when creating the response. Execute case specific instructions if they are present. 
+If the answer is not related to the context or cannot be deduced from the context, do not give an answer and ask for another question.""",
     },
     {
         "role": "user",
@@ -121,21 +26,23 @@ def get_final_prompt(prompt, retriever, tokenizer, history = None, specify_quest
     },
 ]
     
-    RAG_PROMPT_TEMPLATE = tokenizer.apply_chat_template(
+    RAG_PROMPT_TEMPLATE = tokenizer.apply_chat_template( # Template specifies how to convert conversations into a single tokenizable string in the expected model format.
         prompt_in_chat_format, tokenize=False, add_generation_prompt=True
     )
     
-    context = get_context(prompt, retriever)
+    try: 
+        context = get_Multi_Query_context(prompt, retriever, tokenizer, llm) # Gets context based on the prompt and additional model generated questions which are relevant to the original prompt.
+    except Exception as e:
+        context = get_simple_context(prompt, retriever) # Gets context based on the prompt.
     
-    if history != None:
-        context =  history +"\n"+ "Useful information: \n" + context
+    if history != None: # Checks if the chat history is available.
+        context =  history +"\n"+ "Useful information: \n" + context # Adds chat history to the context.
         
-    if specify_question != None:
-        prompt = prompt + "\n Case specific instruction:" + specify_question
+    if specify_question != None: # Checks for case specific instructions.
+        prompt = prompt + "\n Case specific instruction:" + specify_question # Adds case specific instructions.
     
     final_prompt = RAG_PROMPT_TEMPLATE.format(question=prompt, context=context)
 
-    return final_prompt
-
+    return final_prompt # Returns the final prompt which will be given to the llm.
 
     
