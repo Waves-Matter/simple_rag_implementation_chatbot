@@ -16,7 +16,7 @@ This model generates relatively reasonable answer, takes context into account an
 For embedding I used _[small General Text Embeddings (GTE)](https://huggingface.co/thenlper/gte-small)_ model.
 This model is suitable for text embedding tasks, such as  information retrieval or semantic textual similarity.
 
-Vectorised documents were stored in _[Chroma](https://www.trychroma.com/)_ database.
+Vectorized documents were stored in _[Chroma](https://www.trychroma.com/)_ database.
 It was chosen due to it being open source and its easy integration via _langchain_community_. 
 (As well as it was one of the recommended databases mentioned in the task)
 
