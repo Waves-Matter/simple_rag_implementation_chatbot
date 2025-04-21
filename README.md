@@ -26,7 +26,7 @@ It is easily implementable and has a relatively pleasant UI.
 
 ## Running the Application
 
-For easy instalation You can clone the repository. This can be done by:
+For easy installation You can clone the repository. This can be done by:
 ```
 git clone https://github.com/Waves-Matter/ChatBot.git
 ```
