@@ -1,10 +1,9 @@
-torch
 langchain-community==0.3.20
 langchain-huggingface==0.1.2
+accelerate == 1.6.0
+hf_xet == 1.0.3
+git+https://github.com/shumingma/transformers.git
+chainlit == 2.3.0
+jq
 chromadb
 bitsandbytes
-accelerate
-hf_xet
-git+https://github.com/shumingma/transformers.git
-chainlit
-protobuf==3.20.1
