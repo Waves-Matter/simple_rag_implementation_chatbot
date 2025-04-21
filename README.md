@@ -59,15 +59,15 @@ I personally used Python 3.9.21 for this project.
 
 ## Project structure
 
-- `answer.py` Logic behind generating model's answer and checking for connectivity issues. 
-- `connectivity.py` Methods used for the connectivity check.
-- `context.py` Methods for retrieving relevant documents from user prompt. Implementation of Multi Query RAG.
-- `history.py` Methods for maintaining short-term conversation history. History size is limited to avoid irrelevant information.
-- `model_loader.py` Loads LLM and embedding model. Stores vectorised documents in the vector database.
-- `prompt.py` Generating instructions and promps for the model.
-- `run_chainlit.py` Final application that runs the **Chatbot** and its UI.
-- `tester.ipynb` Jupyter notebook file for testing different cases of user prompts.
-- `text.py` Holds the API token and model paths which are needed for the model retrieval from _Hugging Face_. 
+- `answer.py` Logic behind generating model's answer and checking for connectivity issues;
+- `connectivity.py` Methods used for the connectivity check;
+- `context.py` Methods for retrieving relevant documents from user prompt. Implementation of Multi Query RAG;
+- `history.py` Methods for maintaining short-term conversation history. History size is limited to avoid irrelevant information;
+- `model_loader.py` Loads LLM and embedding model. Stores vectorised documents in the vector database;
+- `prompt.py` Generating instructions and promps for the model;
+- `run_chainlit.py` Final application that runs the **Chatbot** and its UI;
+- `tester.ipynb` Jupyter notebook file for testing different cases of user prompts;
+- `text.py` Holds the API token and model paths which are needed for the model retrieval from _Hugging Face_.
 
 Further explanation is provided in the comments of the code itself. :)
 
