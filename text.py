@@ -1,6 +1,6 @@
-token = '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'
-file_path = "C:\Cods\ChatBot\docs\hc_articles.json"
-embed_model_name = "thenlper/gte-small" 
+token = <your-api-key>
+file_path = "docs\hc_articles.json"
+embed_model_name = "thenlper/gte-small" # Can be llm of Your choice
 
 llm_model_name = "Qwen/Qwen2.5-1.5B-Instruct"
 
