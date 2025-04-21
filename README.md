@@ -7,11 +7,11 @@ It takes recent chat history with the user into account and is able to answer fo
 ## Build with
 
 I used _Hugging Face_ for accessing LLM and embedding model. <br />
-For generating the text I _[Qwen2.5-1.5B-Instruct](https://huggingface.co/Qwen/Qwen2.5-1.5B-Instruct)_ LLM was used. 
+For generating the text _[Qwen2.5-1.5B-Instruct](https://huggingface.co/Qwen/Qwen2.5-1.5B-Instruct)_ LLM was used. 
 I chose this model because it is relatively lightweight (has 1.5B parameters), thus doesn't take too much time to download. 
 It is also finetuned on instruction following and has Long-context Support which is important for implementing RAG.
 This model generates relatively reasonable answer, takes context into account and does that in a relatively short time (up to 10s)
-(compared to the other models that I have tried, such as _BitNet b1.58 2B4T_ - would take up to 1 min to generate the answer, or _SmolLM2_ which would often output unreasonable answers )
+(compared to the other models that I have tried, such as _BitNet b1.58 2B4T_ (would take up to 1 min to generate the answer) or _SmolLM2_ (which would often output unreasonable answers ))
 
 For embedding I used _[small General Text Embeddings (GTE)](https://huggingface.co/thenlper/gte-small)_ model.
 This model is suitable for text embedding tasks, such as  information retrieval or semantic textual similarity.
