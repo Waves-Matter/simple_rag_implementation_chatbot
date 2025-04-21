@@ -27,49 +27,49 @@ It is easily implementable and has a relatively pleasant UI.
 ## Running the Application
 
 For easy instalation You can clone the repository. This can be done by:
-'''
+```
 git clone https://github.com/Waves-Matter/ChatBot.git
-'''
+```
 
 For easier management of dependencies it is recommended to create a virtual environment. 
 I personally used Conda. 
-'''
+```
 conda create --name <my-env>
-'''
+```
 
 Install required libraries.
-'''
+```
 pip install -r requirements.txt
-'''
+```
 
 _BitsAndBytesConfig_ library needs cuda support, make sure to set it up.
-'''
+```
 conda install -c conda-forge cudatoolkit=11.2 cudnn=8.1.0
-'''
+```
 
 For _PyTorch_ gpu support, make sure to follow installation instructions on [https://pytorch.org/get-started/locally/](https://pytorch.org/get-started/locally/)
 
 Don't forget to insert Your own _HuggingFace_ API key in the 'text.txt' file :)
 
 Finally, run to start the ✨Chatbot✨ 
-'''
+```
 chainlit run run_chainlit.py -w     
-'''
+```
 I personally used Python 3.9.21 for this project.
 
 ## Project structure
 
-'answer.py' Logic behind generating model's answer and checking for connectivity issues. 
-'connectivity.py' Methods used for the connectivity check.
-'context.py' Methods for retrieving relevant documents from user prompt. Implementation of Multi Query RAG.
-'history.py' Methods for maintaining short-term conversation history. History size is limited to avoid irrelevant information.
-'model_loader.py' Loads LLM and embedding model. Stores vectorised documents in the vector database.
-'prompt.py' Generating instructions and promps for the model.
-'run_chainlit.py' Final application that runs the **Chatbot** and its UI.
-'tester.ipynb' Jupyter notebook file for testing different cases of user prompts.
-'text.py' Holds the API token and model paths which are needed for the model retrieval from _Hugging Face_. 
+- `answer.py` Logic behind generating model's answer and checking for connectivity issues. 
+- `connectivity.py` Methods used for the connectivity check.
+- `context.py` Methods for retrieving relevant documents from user prompt. Implementation of Multi Query RAG.
+- `history.py` Methods for maintaining short-term conversation history. History size is limited to avoid irrelevant information.
+- `model_loader.py` Loads LLM and embedding model. Stores vectorised documents in the vector database.
+- `prompt.py` Generating instructions and promps for the model.
+- `run_chainlit.py` Final application that runs the **Chatbot** and its UI.
+- `tester.ipynb` Jupyter notebook file for testing different cases of user prompts.
+- `text.py` Holds the API token and model paths which are needed for the model retrieval from _Hugging Face_. 
 
-Further explanation is provided in the comments of the code itself.
+Further explanation is provided in the comments of the code itself. :)
 
 ## Limitations of the Chatbot
 
