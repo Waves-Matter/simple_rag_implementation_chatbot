@@ -49,7 +49,7 @@ conda install -c conda-forge cudatoolkit=11.2 cudnn=8.1.0
 
 For _PyTorch_ gpu support, make sure to follow installation instructions on [https://pytorch.org/get-started/locally/](https://pytorch.org/get-started/locally/)
 
-Don't forget to insert Your own _HuggingFace_ API key in the 'text.txt' file :)
+Don't forget to insert Your own _HuggingFace_ API key in the `text.txt` file :)
 
 Finally, run to start the ✨Chatbot✨ 
 ```
