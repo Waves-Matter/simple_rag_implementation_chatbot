@@ -1,8 +1,9 @@
 ### Project for a customer service chatbot
 
-This is my (Ugnė) submission for ***AI Developer Homework Assignment***. :) <br />
 Ths **chatbot** is able to take user's query and provide relevant answer using **RAG**. 
 It takes recent chat history with the user into account and is able to answer follow-up questions.
+This project is meant to act as a customer service bot for a VPN services provider, however the documents used for RAG are removed.
+I MIGHT add a placeholder document, however, this project is not going to be improved in the future.
 
 ## Build with
 
